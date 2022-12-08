@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 function MobileNav() {
   const [menuWrapper, setMenuWrapper] = useState(false);
   const variants = {
-    hide: { opacity: 0,  },
+    hide: { opacity: 0 },
     show: { opacity: 1 },
     transition: { duration: 1, delay: 0.5 },
     slideIn: { x: "0%" },
@@ -34,7 +34,11 @@ function MobileNav() {
         </div>
       </div>
       {menuWrapper && (
-        <Wrapper initial={false} animate={menuWrapper ? "show" : "hide"} variants={variants}>
+        <Wrapper
+          initial={false}
+          animate={menuWrapper ? "show" : "hide"}
+          variants={variants}
+        >
           <motion.div
             className="menu-wrapper"
             initial={false}
@@ -71,6 +75,10 @@ function MobileNav() {
 
 export default MobileNav;
 const Container = styled.nav`
+  @media (max-width: 768px) {
+    display: block;
+  }
+  display: none;
   position: relative;
   header {
     p {
@@ -95,7 +103,7 @@ const Wrapper = styled(motion.div)`
   width: 100%;
   height: 100vh;
   position: fixed;
-  z-index:9999999;
+  z-index: 9999999;
   top: 0;
   left: 0;
   background: #131313aa;

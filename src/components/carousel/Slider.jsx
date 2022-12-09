@@ -72,15 +72,15 @@ function Slider({ image }) {
                 <p>{image.smTxt}</p>
                 <Link to={image.link}>Shop Now</Link>
               </Text>
-              <button className="left" onClick={() => handleClick("left")}>
-                <AiOutlineLeft size="2rem" />
-              </button>
-
-              <button className="right" onClick={() => handleClick("right")}>
-                <AiOutlineRight size="2rem" />
-              </button>
             </div>
           ))}
+          <button className="left" onClick={() => handleClick("left")}>
+            <AiOutlineLeft size="2rem" />
+          </button>
+
+          <button className="right" onClick={() => handleClick("right")}>
+            <AiOutlineRight size="2rem" />
+          </button>
         </Sliders>
       </Slide>
     </Container>
@@ -109,6 +109,7 @@ const Sliders = styled.div`
   display: flex;
   transform: translateX(${(props) => props.activeIndex * -100}%);
   transition: all 1s ease;
+  position: relative;
   .sliderImage {
     min-width: 100vw;
     height: 100%;
@@ -120,23 +121,6 @@ const Sliders = styled.div`
       position: absolute;
       left: 0;
       top: 0;
-    }
-    .left {
-      position: absolute;
-      left: 5%;
-      top: 50%;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-    }
-
-    .right {
-      position: absolute;
-      right: 5%;
-      top: 50%;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
     }
   }
 `;
@@ -167,43 +151,43 @@ const Sliders = styled.div`
 //   }
 // `;
 
- const Text = styled.div`
-   @media (max-width: 768px) {
-     width: 80%;
-     height: 60vh;
-     left: 10%;
-     top: 20%;
-   }
-   width: 60%;
-   margin: auto;
-   background: #0000007e;
-   height: 30vh;
-   position: absolute;
-   top: 35%;
-   left: 20%;
-   color: white;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   gap: 5%;
-   align-items: center;
-   font-family: "Montserrat", sans-serif;
-   h2 {
-     @media (max-width: 768px) {
-       font-size: 2rem;
-       text-align: center;
-     }
-     font-size: 3vw;
-   }
-   p{
-     @media (max-width: 768px) {
-       font-size: 1rem;
-       text-align: center;
-       font-weight: 400;
-     }
-     font-size: 1.2vw;
-   }
-   a {
-     color: white;
-   }
- `;
+const Text = styled.div`
+  @media (max-width: 768px) {
+    width: 80%;
+    height: 60vh;
+    left: 10%;
+    top: 20%;
+  }
+  width: 60%;
+  margin: auto;
+  background: #0000007e;
+  height: 30vh;
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5%;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  h2 {
+    @media (max-width: 768px) {
+      font-size: 2rem;
+      text-align: center;
+    }
+    font-size: 3vw;
+  }
+  p {
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 400;
+    }
+    font-size: 1.2vw;
+  }
+  a {
+    color: white;
+  }
+`;

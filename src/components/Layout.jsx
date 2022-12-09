@@ -19,7 +19,7 @@ export default Layout
 
 const Container = styled.div`
 @media (max-width: 768px) {
-  min-height: auto;
+  min-height: 100vh;
 }
   width: 100%;
   min-height: 100vh;

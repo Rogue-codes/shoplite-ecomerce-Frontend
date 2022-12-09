@@ -26,7 +26,7 @@ export const navLinks = [
 export const carouselData = [
     {
         img: img1,
-        text:"",
+        text:"IT'S NIKE SEASON",
         smTxt:"Do well, live well and dress really well",
         link:""
     },

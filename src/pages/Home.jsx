@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import Carousel from '../components/carousel/Carousel'
 import ChooseYourStyle from '../Features/homeFeatures/ChooseYourStyle'
 import Collection from '../Features/homeFeatures/Collection'
@@ -7,14 +8,19 @@ import Features from '../Features/homeFeatures/Features'
 
 function Home() {
   return (
-    <div>
+    <Container>
         <Carousel/>
         <Features/>
         <ChooseYourStyle/>
         <Collection/>
         <FeaturedCollection/>
-    </div>
+    </Container>
   )
 }
 
 export default Home
+
+const Container = styled.main`
+  width: 100%;
+  min-height: 100vh;
+`

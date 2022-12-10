@@ -53,15 +53,17 @@ function Footer() {
 export default Footer;
 const Container = styled.footer`
   width: 100%;
+  
   font-family: "Poppins", sans-serif;
   padding: 2%;
 `;
 const Top = styled.div`
   @media (max-width: 768px) {
     flex-wrap: wrap;
+    height: auto;
   }
   width: 100%;
-  height: 60%;
+  height: 40vh;
   display: flex;
   justify-content: space-between;
   ul {

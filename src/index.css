@@ -12,7 +12,8 @@
 }
 .App{
   width: 100%;
-  position: relative;
+  /* position: relative; */
+  min-height: 100vh;
 }
 .featured-product{
   text-align: center;

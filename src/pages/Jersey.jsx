@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Filter from "../components/filter/Filter";
-import AccessoriesWrapper from "../Features/accesoriesFeatures/AccessoriesWrapper";
-import { useGetAllAccesoriesQuery } from "../redux/ApiSlice";
+import JerseyWrapper from "../Features/jerseyFeatures/JerseyWrapper";
+import { useGetAllJerseysQuery } from "../redux/ApiSlice";
 import MobileFilter from "../widgets/filter/MobileFilter";
 
-function Accesories() {
+function Jersey() {
   // filter by brand
   const [productBrand, setProductBrand] = useState("");
   // sort
   const [sortBy, setsortBy] = useState("-price");
+
   // filter by price
   const [price, setPrice] = useState(100000);
 
@@ -22,11 +23,7 @@ function Accesories() {
   if (!productBrand) {
     query = "";
   }
-  const { isLoading, data, error } = useGetAllAccesoriesQuery({
-    query,
-    sortBy,
-    priceVal
-  });
+  const { isLoading, data, error } = useGetAllJerseysQuery({ query, sortBy, priceVal });
   return (
     <Container>
       <MobileFilter />
@@ -37,13 +34,13 @@ function Accesories() {
         setPrice={setPrice}
         price={price}
       />
-      <AccessoriesWrapper isLoading={isLoading} data={data} error={error} />
+      <JerseyWrapper isLoading={isLoading} data={data} error={error} />
     </Container>
   );
 }
 
-export default Accesories;
-const Container = styled.main`
+export default Jersey;
+const Container = styled.section`
   width: 100%;
   min-height: 100vh;
   position: relative;

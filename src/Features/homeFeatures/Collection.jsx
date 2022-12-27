@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { collection } from "../../utils/data";
 
 function Collection() {
+  
   return (
     <Container>
       <h1>Collection List</h1>
@@ -13,7 +15,7 @@ function Collection() {
               <img src={item.img} alt="" />
             </div>
             <div className="bottom">
-              <h2>{item.name}</h2>
+            <Link to={item.link}>{item.name}</Link>
               <p>{item.quantity}</p>
             </div>
           </Card>
@@ -58,6 +60,10 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  a{
+    color: black;
+    margin-bottom: 5%;
+  }
   .top {
     width: 100%;
     height: 70%;

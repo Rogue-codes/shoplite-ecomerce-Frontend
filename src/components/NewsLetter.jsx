@@ -60,7 +60,9 @@ const Left = styled.div`
       font-size: 0.7rem;
       text-align: center;
     }
-    font-size: 1.5vw;
+    width: 60%;
+    text-align: center;
+    font-size: 1.2vw;
   }
   width: 50%;
   height: 100%;
@@ -88,12 +90,12 @@ const Right = styled.div`
     input {
       @media (max-width: 768px) {
         font-size: 0.7rem;
-        border-bottom: 2px solid #fff;
+        border-bottom: 1px solid #fff;
       }
       width: 90%;
       height: 8vh;
       border: none;
-      border-bottom: 3px solid #fff;
+      border-bottom: 1px solid #fff;
       background: none;
       color: white;
       padding: 2%;

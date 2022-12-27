@@ -1,31 +1,49 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Select from "react-select";
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "nike" },
+  { value: "Ross" },
+  { value: "prada" },
+  { value: "John Foster" },
+  { value: "CK" },
+  { value: "adidas" },
+  { value: "jordan" },
+  { value: "john mendson" },
+  { value: "polo ralph" },
+  { value: "nudie" },
+  { value: "Fngeen" },
+  { value: "Under Armour" },
+  { value: "Carhartt" },
+  { value: "LV" },
+  { value: "Unavowed" },
+  { value: "varsity" },
 ];
 
-function Filter() {
-  const [selectedOption, setSelectedOption] = useState(null);
-  
+function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
+  // const [selectedOption, setSelectedOption] = useState();
+
+  // setProductBrand(options.value)
+  // console.log(selectedOption.value)
   // Create a state variable for each checkbox
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
 
   //   price slider
-  const [range, setRange] = useState(0);
+  const [range, setRange] = useState(price);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(100000);
 
   const handleChange = (e) => {
     setRange(e.target.value);
   };
+  setPrice(range)
+  console.log(range)
+  
 
   function handleCheckbox1Change(event) {
     // Set the state of checkbox1 to the opposite of its current value
     setCheckbox1(!checkbox1);
+    setsortBy("-price");
     // Uncheck checkbox2 if checkbox1 is checked
     if (event.target.checked) {
       setCheckbox2(false);
@@ -35,6 +53,7 @@ function Filter() {
   function handleCheckbox2Change(event) {
     // Set the state of checkbox2 to the opposite of its current value
     setCheckbox2(!checkbox2);
+    setsortBy("price");
     // Uncheck checkbox1 if checkbox2 is checked
     if (event.target.checked) {
       setCheckbox1(false);
@@ -43,13 +62,20 @@ function Filter() {
 
   return (
     <Container>
-      <p>Gender:</p>
-      <Select
-        options={options}
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        className="select"
-      />
+      <p>Brand:</p>
+      <select
+        name=""
+        id=""
+        value={productBrand}
+        onChange={(e) => setProductBrand(e.target.value)}
+      >
+        <option value="">none</option>
+        {options.map((item, i) => (
+          <option value={item.value} key={i}>
+            {item.value}
+          </option>
+        ))}
+      </select>
       <br />
       <div className="price">
         <p>Price</p>
@@ -61,7 +87,7 @@ function Filter() {
             checked={checkbox1}
             onChange={handleCheckbox1Change}
           />
-          Checkbox 1
+          Descending
         </label>{" "}
         <br />
         <label>
@@ -70,19 +96,11 @@ function Filter() {
             checked={checkbox2}
             onChange={handleCheckbox2Change}
           />
-          Checkbox 2
+          Ascending
         </label>
       </div>{" "}
       <br />
-      <p>Brand:</p>
-      <Select
-        options={options}
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        className="select"
-      />
-      <br />
-      <p>price range: {range}</p>
+      <p>price range:( less than) ₦{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
       <div className="range">
         <div className="field">
           <div className="left">{min}</div>
@@ -92,7 +110,7 @@ function Filter() {
             max={max}
             value={range}
             step="10000"
-            onChange={handleChange}
+            onChange={(e)=>handleChange(e)}
             oninput="rangeValue.innerText = this.value"
           />
           <div className="right">{max}</div>
@@ -104,16 +122,20 @@ function Filter() {
 
 export default Filter;
 const Container = styled.aside`
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     display: none;
-}
+  }
   width: 25%;
   padding: 1%;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  /* border: 3px solid #000; */
+  select {
+    height: 6vh;
+    width: 100%;
+    margin-bottom: 5%;
+  }
   p {
     padding-bottom: 5%;
   }

@@ -1,13 +1,25 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Featured } from "../../utils/data";
+import { useGetAllFeaturedCollectionsQuery } from "../../redux/ApiSlice";
+import Error from "../../widgets/errorScreen/Error";
+import Loading from "../../widgets/loadingScreen/Loading";
 import Modal from "../../widgets/modal/Modal";
 
 function Features() {
+  const { data, isLoading, error } = useGetAllFeaturedCollectionsQuery();
+
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const close = () => setShowModal(false);
+  const [selectedItem, setSelectedItem] = useState({});
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+    openModal()
+  }
+
 
   return (
     <Container>
@@ -16,43 +28,53 @@ function Features() {
       </header>
 
       <Flex>
-        {Featured.map((item, i) => (
+        {isLoading ? (
+          <Loading/>
+        ) : error ? (
+          <Error/>
+        ) : data ? (
           <>
-            <Card key={i}>
-              <Image>
-                <img src={item.img} alt="" />
-              </Image>
-              <Text>
-                <p>{item.name}</p>
-                <Price>
-                  <span className="red">₦{item.newPrice}</span>
-                  <span>
-                    <strike>₦{item.oldPrice}</strike>
-                  </span>
-                </Price>
+            {data.products.map((item, i) => (
+              <Card key={item._id}>
+                <>
+                  <Image>
+                    <img src={item.coverImage} alt="" />
+                  </Image>
+                  <Link to={`/products/${item._id}`}>
+                  <Text>
+                    <p>{item.title}</p>
+                    <Price>
+                      <span className="red">₦{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                      <span>
+                        <strike>₦{item.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strike>
+                      </span>
+                    </Price>
 
-                <Size>
-                  {item.size.map((size, i) => (
-                    <span className="circle" key={i}>
-                      {size}
-                    </span>
-                  ))}
-                </Size>
-              </Text>
-              <div className="buttonComponent">
-                <button onClick={openModal}>Quick Shop</button>
-              </div>
-            </Card>
-            <AnimatePresence
-              initial={false}
-              // exitBeforeEnter={true}
-              mode='wait'
-              onExitComplete={() => null}
-            >
-              {showModal && <Modal handleClose={close} item={item} />}
-            </AnimatePresence>
+                    <Size>
+                      {item.size.map((size, i) => (
+                        <span className="circle" key={i}>
+                          {size}
+                        </span>
+                      ))}
+                    </Size>
+                  </Text>
+                  </Link>
+                  <div className="buttonComponent">
+                    <button onClick={()=>handleItemClick(item)}>Quick Shop</button>
+                  </div>
+                </>
+                <AnimatePresence
+                  initial={false}
+                  // exitBeforeEnter={true}
+                  mode="wait"
+                  onExitComplete={() => null}
+                >
+                  {showModal && <Modal handleClose={close} item={selectedItem} />}
+                </AnimatePresence>
+              </Card>
+            ))}
           </>
-        ))}
+        ) : null}
       </Flex>
     </Container>
   );
@@ -61,9 +83,9 @@ function Features() {
 export default Features;
 
 const Container = styled.div`
-    @media (max-width: 768px) {
-      padding-bottom: 15%;
-    }
+  @media (max-width: 768px) {
+    padding-bottom: 15%;
+  }
   width: 100%;
   min-height: 100vh;
   header {
@@ -119,6 +141,10 @@ const Card = styled.div`
       cursor: pointer;
       color: #fff;
     }
+  }
+  a{
+    text-decoration: none;
+    color: #000;
   }
 `;
 const Image = styled.div`

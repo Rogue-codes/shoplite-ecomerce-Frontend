@@ -10,6 +10,14 @@ export const navLinks = [
     title: "Shoes",
   },
   {
+    to: "/sneakers",
+    title: "Sneakers",
+  },
+  {
+    to: "/jersey",
+    title: "Jersey",
+  },
+  {
     to: "/accessories",
     title: "Accesories",
   },
@@ -52,7 +60,7 @@ export const carouselData = [
 
 export const Featured = [
   {
-    name: "Christ Dio Gold Logo Crested Designed White Sole Lace Up Sneakers",
+    name: "mimi Dio Gold Logo Crested Designed White Sole Lace Up Sneakers",
     img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/0_0011_img_3144_360x.jpg?v=1658980192",
     oldPrice: "51,598.80",
     newPrice: "46,438.00",
@@ -105,22 +113,32 @@ export const collection = [
   {
     img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/1_514_7aef7ab4-bc44-489a-a568-f508cba7a162_360x.jpg?v=1663675993",
     name: "Shoes",
-    quantity: 400,
+    quantity: 6,
+    link:'/shoes'
   },
   {
-    img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/B_5__0000_B_5__0011_IMG_6149_0118_IMG_8062_360x.jpg?v=1664371218",
+    img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/6UOFka4OxSnpApC_360x.jpg?v=1669981318",
+    name: "Jersey",
+    quantity: 3,
+    link:'/jersey'
+  },
+  {
+    img: "https://www.ajebomarket.com/media/catalog/product/cache/61376d537388a894e3b8d4825ffa2133/0/_/0_0003_img_5406.jpg",
     name: "Accessories",
-    quantity: 300,
+    quantity: 6,
+    link:"/accessories"
   },
   {
-    img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/4_1_d13672c9-d4b7-4ec6-b3f5-45c50aa3c9fd_360x.jpg?v=1663675583",
-    name: "Clothing",
-    quantity: 512,
+    img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/skype_picture_2022_02_09t12_16_13_719z_1_1_800x.jpg?v=1658978941",
+    name: "shirts",
+    quantity: 11,
+    link:"/clothing"
   },
   {
-    img: "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/product/Y/R/164680_1597762813.jpg",
-    name: "Watches",
-    quantity: 200,
+    img: "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/1_1__0002_img_3098_0013_img_3264_360x.jpg?v=1658980169",
+    name: "Sneaker",
+    quantity: 6,
+    link: "/sneakers",
   },
 ];
 

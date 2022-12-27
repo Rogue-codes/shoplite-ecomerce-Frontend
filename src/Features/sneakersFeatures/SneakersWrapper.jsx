@@ -6,7 +6,7 @@ import Error from "../../widgets/errorScreen/Error";
 import Loading from "../../widgets/loadingScreen/Loading";
 import Modal from "../../widgets/modal/Modal";
 
-function AccessoriesWrapper({ isLoading, error, data }) {
+function SneakersWrapper({ isLoading, error, data }) {
   const [openModal, setOpenModal] = useState(false);
 
   const open = () => setOpenModal(true);
@@ -15,8 +15,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
     setOpenModal(false);
   };
   const [selectedItem, setSelectedItem] = useState({});
-
-  const handleModalOpen = (item) => {
+  const handleItemClick = (item) => {
     open();
     setSelectedItem(item);
   };
@@ -30,7 +29,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
         <>
           {data.products.map((item, i) => (
             <>
-              <Card>
+              <Card key={item._id}>
                 <Image>
                   <img src={item.coverImage} alt="" />
                 </Image>
@@ -64,7 +63,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
                     </Size>
                   </Text>
                 </Link>
-                <button onClick={() => handleModalOpen(item)}>
+                <button onClick={() => handleItemClick(item)}>
                   Quick Shop
                 </button>
               </Card>
@@ -85,7 +84,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
   );
 }
 
-export default AccessoriesWrapper;
+export default SneakersWrapper;
 const Container = styled.section`
   @media (max-width: 768px) {
     width: 100%;

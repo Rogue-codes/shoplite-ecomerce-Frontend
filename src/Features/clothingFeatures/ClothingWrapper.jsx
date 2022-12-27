@@ -1,10 +1,12 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { shirts } from "../../utils/data";
+import Error from "../../widgets/errorScreen/Error";
+import Loading from "../../widgets/loadingScreen/Loading";
 import Modal from "../../widgets/modal/Modal";
 
-function ClothingWrapper() {
+function ClothingWrapper({ isLoading, error, data }) {
   const [openModal, setOpenModal] = useState(false);
 
   const open = () => setOpenModal(true);
@@ -12,44 +14,72 @@ function ClothingWrapper() {
   const close = () => {
     setOpenModal(false);
   };
+
+  const [selectedItem, setSelectedItem] = useState({});
+  const handleItemClick = (item) => {
+    open();
+    setSelectedItem(item);
+  };
   return (
     <Container>
-      {shirts.map((shirt, i) => (
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <Error />
+      ) : data ? (
         <>
-          <Card>
-            <Image>
-              <img src={shirt.img} alt="" />
-            </Image>
-            <Text>
-              <p>{shirt.name}</p>
-              <Price>
-                <span className="red">₦{shirt.newPrice}</span>
-                <span>
-                  <strike>₦{shirt.oldPrice}</strike>
-                </span>
-              </Price>
+          {data.products.map((shirt, i) => (
+            <>
+              <Card key={shirt._id}>
+                <Image>
+                  <img src={shirt.coverImage} alt="" />
+                </Image>
+                <Link to={`/products/${shirt._id}`}>
+                  <Text>
+                    <p>{shirt.title}</p>
+                    <Price>
+                      <span className="red">
+                        ₦
+                        {shirt.price
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </span>
+                      <span>
+                        <strike>
+                          ₦
+                          {shirt.oldPrice
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </strike>
+                      </span>
+                    </Price>
 
-              <Size>
-                {shirt.size.map((size, i) => (
-                  <span className="circle" key={i}>
-                    {size}
-                  </span>
-                ))}
-              </Size>
-            </Text>
-            <button onClick={open}>Quick Shop</button>
-          </Card>
+                    <Size>
+                      {shirt.size.map((size, i) => (
+                        <span className="circle" key={i}>
+                          {size}
+                        </span>
+                      ))}
+                    </Size>
+                  </Text>
+                </Link>
+                <button onClick={() => handleItemClick(shirt)}>
+                  Quick Shop
+                </button>
+              </Card>
 
-          <AnimatePresence
-            initial={false}
-            // exitBeforeEnter={true}
-            mode="wait"
-            onExitComplete={() => null}
-          >
-            {openModal && <Modal handleClose={close} item={shirt} />}
-          </AnimatePresence>
+              <AnimatePresence
+                initial={false}
+                // exitBeforeEnter={true}
+                mode="wait"
+                onExitComplete={() => null}
+              >
+                {openModal && <Modal handleClose={close} item={selectedItem} />}
+              </AnimatePresence>
+            </>
+          ))}
         </>
-      ))}
+      ) : null}
     </Container>
   );
 }
@@ -69,9 +99,9 @@ const Container = styled.section`
   flex-wrap: wrap;
 `;
 const Card = styled.div`
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 48%;
-}
+  }
   width: 33%;
   height: 60vh;
   margin-top: 5%;
@@ -83,6 +113,10 @@ const Card = styled.div`
       visibility: visible;
       transition: all 0.5s linear;
     }
+  }
+  a{
+    text-decoration: none;
+    color: black;
   }
   button {
     visibility: hidden;

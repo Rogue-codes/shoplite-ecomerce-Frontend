@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-function AddToCartButton() {
-  return <Container>Add to cart</Container>;
+function AddToCartButton({item,handleAddToCart}) {
+  return <Container onClick={()=>handleAddToCart(item)}>Add to cart</Container>;
 }
 
 export default AddToCartButton;

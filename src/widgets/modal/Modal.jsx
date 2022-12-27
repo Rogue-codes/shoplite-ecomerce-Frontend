@@ -3,18 +3,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Backdrop from "./Backdrop";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import {MdCancel} from "react-icons/md"
-function Modal({ handleClose, item }) {
+import { MdCancel } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
+function Modal(props) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const switchImages = (direction) => {
     if (direction === "left") {
       setActiveIndex(
-        activeIndex === 0 ? item.images.length - 1 : activeIndex - 1
+        activeIndex === 0 ? props.item.images.length - 1 : activeIndex - 1
       );
     } else {
       setActiveIndex(
-        activeIndex === item.images.length - 1 ? 0 : activeIndex + 1
+        activeIndex === props.item.images.length - 1 ? 0 : activeIndex + 1
       );
     }
   };
@@ -47,8 +49,14 @@ function Modal({ handleClose, item }) {
   const activeBox = (i) => {
     setActive(i);
   };
+
+  const dispatch = useDispatch()
+
+  const handleAddToCart = (item) => {
+    dispatch(addToCart({...item, activeSize: item.size[active]}));
+  };
   return (
-    <Backdrop handleClose={handleClose}>
+    <Backdrop handleClose={props.handleClose}>
       <ModalDiv
         onClick={(e) => e.stopPropagation()}
         variants={dropIn}
@@ -67,10 +75,10 @@ function Modal({ handleClose, item }) {
             >
               <AiOutlineRight size="1.2rem" />
             </button>
-            <img src={item.images[activeIndex]} alt="" />
+            <img src={props.item.images[activeIndex]} alt="" />
           </div>
           <div className="images">
-            {item.images.map((image, i) => (
+            {props.item.images.map((image, i) => (
               <div
                 onClick={() => setActiveIndex(i)}
                 className={activeIndex === i ? "box activeBox" : "box"}
@@ -81,17 +89,17 @@ function Modal({ handleClose, item }) {
           </div>
         </div>
         <div className="right">
-          <p>{item.name}</p>
+          <p>{props.item.title}</p>
           <div className="price">
-            <span className="red">₦{item.newPrice}</span>
+            <span className="red">₦{props.item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
             <span>
-              <strike>₦{item.oldPrice}</strike>
+              <strike>₦{props.item.oldPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strike>
             </span>
           </div>
           <p>Shipping calculated at checkout.</p>
-          <p>size: {item.size[active]}</p>
+          <p>size: {props.item.size[active]}</p>
           <div className="sizes">
-            {item.size.map((size, i) => (
+            {props.item.size.map((size, i) => (
               <span
                 className={active === i ? "box activeBox" : "box"}
                 onClick={() => activeBox(i)}
@@ -109,9 +117,11 @@ function Modal({ handleClose, item }) {
               <button onClick={increaseCount}>+</button>
             </div>
           </div>
-          <button className="add-to-cart">Add to cart</button>
+          <button className="add-to-cart" onClick={()=>handleAddToCart(props.item)}>Add to cart</button>
         </div>
-        <button className="close" onClick={handleClose}><MdCancel size="2rem"/></button>
+        <button className="close" onClick={props.handleClose}>
+          <MdCancel size="2rem" />
+        </button>
       </ModalDiv>
     </Backdrop>
   );
@@ -131,19 +141,19 @@ const ModalDiv = styled(motion.div)`
   background: #fff;
   display: flex;
   justify-content: center;
-  .close{
+  .close {
     @media (max-width: 768px) {
       display: block;
+      display: flex;
     }
     display: none;
     position: absolute;
-    border: none;
+    border: 2px solid #000;
     background: transparent;
     top: 0;
     right: 0;
     width: 40px;
     height: 40px;
-    display: flex;
     justify-content: center;
     align-items: center;
     /* font-size: 1rem; */

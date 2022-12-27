@@ -1,4 +1,7 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import Cart from '../components/cart/Cart'
 import {
   BsFacebook,
   BsTwitter,
@@ -7,32 +10,58 @@ import {
   BsYoutube,
   BsFillCartFill,
   BsSearch,
+  BsHeartFill,
 } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MobileNav from "../Features/navFeatures/MobileNav";
-import { navLinks } from "../utils/data";
+import { userLogout } from "../redux/authSlice";
 
 function Header() {
-  const [scroll, setScroll] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showAdvert, setShowAdvert] = useState(true);
+  const [showCart, setShowCart] = useState(false);
 
-  window.onscroll = () => {
-    setScroll(window.pageYOffset < 50 ? false : true);
-    return window.onscroll(null);
+  const cart =()=>{
+    setShowCart(true);
+  }
+
+  const handleLogOut = () => {
+    dispatch(userLogout());
+    toast.success("logout successful", {
+      position: "top-right",
+    });
+    navigate("/account/login");
   };
+  const variants = {
+    open: { opacity: 1, y: 0 },
+    closed: { opacity: 0, y: "-10%", transition: { delay: 2.5 } },
+  };
+  const [showDropDown, setShowDropDown] = useState(false);
   return (
     <Container>
-      <div className="header-1">
-        <div className="icons">
-          <BsFacebook />
-          <BsTwitter />
-          <BsInstagram />
-          <BsPinterest />
-          <BsYoutube />
+      {showAdvert && (
+        <div className="header-1">
+          <div className="icons">
+            <BsFacebook />
+            <BsTwitter />
+            <BsInstagram />
+            <BsPinterest />
+            <BsYoutube />
+          </div>
+          <p>Fast delivery with money back guarantee</p>
+          <FaTimes
+            className="close"
+            cursor="pointer"
+            onClick={() => setShowAdvert(false)}
+          />
         </div>
-        <p>Fast delivery with money back guarantee</p>
-      </div>
+      )}
 
       <div className="header-search">
         <Link to="/" className="logo">
@@ -41,47 +70,72 @@ function Header() {
         <div className="search">
           <input type="search" />
           <button>
-            <BsSearch size="1.5rem" />
+            <BsSearch size="1rem" />
           </button>
         </div>
-        <div className="Account-Container">
+        <div
+          className="Account-Container"
+          onClick={() => setShowDropDown(!showDropDown)}
+        >
           <div className="account">
-            <Link to="/">Account</Link>
-            <FaUserAlt />
-          </div>
-          <div className="cart">
-            <span>Cart</span>
-            <BsFillCartFill />
+            <FaUserAlt size="1rem" />
+            {user ? (
+              <>
+                <div className="auth">
+                  <p>Hi, {user}</p>
+                </div>
+
+                {showDropDown && (
+                  <motion.div
+                    className="dropDwn"
+                    initial={false}
+                    animate={showDropDown ? "open" : "closed"}
+                    variants={variants}
+                  >
+                    <div className="account__details">
+                      <FaUserAlt size="1rem" />
+                      <Link to="/me">My Account</Link>
+                    </div>
+                    <div className="account__details">
+                      <BsHeartFill size="1rem" />
+                      <p>Saved Items</p>
+                    </div>
+                    <div className="logout">
+                      <p onClick={handleLogOut}>logout</p>
+                    </div>
+                  </motion.div>
+                )}
+              </>
+            ) : (
+              <Link to="/account/login">Account</Link>
+            )}
           </div>
         </div>
-      </div>
 
-      <div className={scroll ? "link fixed-link" : "link"}>
-        {navLinks.map((link, i) => (
-          <NavLink
-            to={link.to}
-            key={i}
-            className={({ isActive }) => (isActive ? "active" : "inactive")}
-          >
-            {link.title}
-          </NavLink>
-        ))}
+        <div className="cart" onClick={cart}>
+          <span>Cart</span>
+          <BsFillCartFill />
+        </div>
       </div>
       <MobileNav />
+      <Cart showCart={showCart} setShowCart={setShowCart}/>
+
     </Container>
   );
 }
 
 export default Header;
-const Container = styled.header`
+const Container = styled.div`
+  font-family: "Roboto", sans-serif;
   padding: 1%;
+  font-family: "Poppins", sans-serif;
   position: relative;
-  font-family: "Montserrat", sans-serif;
   .header-1 {
     @media (max-width: 768px) {
       display: none;
     }
     width: 100%;
+    position: relative;
     display: flex;
     align-items: center;
     height: 8vh;
@@ -93,6 +147,10 @@ const Container = styled.header`
       justify-content: space-between;
       width: 20%;
       font-size: 1.2rem;
+    }
+    .close {
+      position: absolute;
+      right: 1%;
     }
   }
   .header-search {
@@ -112,77 +170,111 @@ const Container = styled.header`
       text-decoration: none;
     }
     .search {
-      width: 60%;
+      width: 30%;
+      margin-left: 5%;
       display: flex;
       justify-content: center;
       align-items: center;
       input {
         width: 80%;
-        height: 8vh;
+        height: 6vh;
         border: none;
         padding: 2%;
         font-size: 1.2rem;
-        box-shadow: rgba(235, 236, 237, 0.898) 0px 0px 0px 2px,
-          rgba(235, 236, 237, 0.944) 0px 4px 6px -1px,
-          rgba(235, 236, 237, 0.886) 0px 1px 0px inset;
+        border: 1px solid #d4caca;
         &:focus {
           outline: none;
         }
       }
       button {
-        height: 8vh;
+        height: 6vh;
         width: 10%;
         margin-left: -10%;
         cursor: pointer;
-        border: none;
-        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-          rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        border: 1px solid #000;
+        border-left: none;
+        background: #000;
+        color: white;
       }
     }
     .Account-Container {
-      width: 30%;
+      width: 22%;
+      padding: 1% 0%;
+      cursor: pointer;
       height: 100%;
+      margin-left: 25%;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15%;
       .account {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 5%;
-        width: 50%;
-      }
-      .cart {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2%;
-        gap: 5%;
-        width: 50%;
-        text-decoration: none;
+        width: 100%;
+        font-size: 1.3vw;
+        font-weight: 500;
+        a {
+          text-decoration: none;
+          color: #000;
+          margin-left: 5%;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        .auth {
+          width: 80%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:hover {
+            color: red;
+          }
+        }
       }
     }
-  }
-  .link {
-    @media (max-width: 768px) {
-      display: none;
+    .cart {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 1.3vw;
+      gap: 2%;
+      gap: 5%;
+      width: 10%;
+      cursor: pointer;
     }
-    width: 60%;
-    margin: auto;
-    height: 10vh;
-    margin-top: 2%;
-    display: flex;
-    justify-content: center;
-    gap: 5%;
-    align-items: center;
   }
-  .fixed-link {
-    position: fixed;
-    left: 20%;
-    top: 0;
-    z-index: 9999;
+  .dropDwn {
+    width: 15%;
+    height: 30vh;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+      rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    position: absolute;
+    right: 11.5%;
+    top: 95%;
     background: white;
-    box-shadow: rgba(122, 123, 125, 0.3) 0px 0px 0px 3px;
+    z-index: 9999999999999999;
+    .account__details {
+      width: 100%;
+      height: 10vh;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5%;
+      padding: 0% 5%;
+    }
+    .logout {
+      width: 100%;
+      height: 10vh;
+      border-top: 1px solid #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5%;
+      font-weight: 700;
+      text-decoration: underline;
+      p {
+        cursor: pointer;
+      }
+    }
   }
 `;

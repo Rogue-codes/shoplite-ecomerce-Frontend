@@ -1,29 +1,18 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
-import AddToCartButton from "../../widgets/buttons/AddToCartButton";
-import { useGetFeaturedProductQuery } from "../../redux/ApiSlice";
-import Error from "../../widgets/errorScreen/Error";
-import Loading from "../../widgets/loadingScreen/Loading";
+import { useGetProductByIdQuery } from "../redux/ApiSlice";
+import AddToCartButton from "../widgets/buttons/AddToCartButton";
+import Error from "../widgets/errorScreen/Error";
+import Loading from "../widgets/loadingScreen/Loading";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/cartSlice";
-function FeaturedCollection() {
-  // const product = [
-  //   {
-  //     name: "AD Lightweight Lemon Running Sneakers",
-  //     newPrice: 42118.0,
-  //     oldPrice: 46798.8,
-  //     size: [42, 43, 44, 45],
-  //     images: [
-  //       "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/nn_0009_img_6950_1080x.jpg?v=1658979524",
-  //       "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/nn_0011_img_6947_1080x.jpg?v=1658979525",
-  //       "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/nn_0012_img_6946_1080x.jpg?v=1658979525",
-  //       "https://cdn.shopify.com/s/files/1/0590/3646/7399/products/nn_0010_img_6948_1080x.jpg?v=1658979524",
-  //     ],
-  //   },
-  // ];
-  //   image slider
-  const { data, isLoading, error } = useGetFeaturedProductQuery();
+import { addToCart } from "../redux/cartSlice";
+
+function SingleProduct() {
+  const { id } = useParams();
+  const { isLoading, data, error } = useGetProductByIdQuery(id);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   //   decrease activeIndex to navigate between images in the left direction
@@ -68,112 +57,108 @@ function FeaturedCollection() {
   const handleAddToCart = (item) => {
     dispatch(addToCart(item));
   };
+
   return (
     <>
-      <h2 className="featured-product">Featured Product</h2>
-      <>
-        {isLoading ? (
-          <Loading />
-        ) : error ? (
-          <Error />
-        ) : data ? (
-          <>
-            {data.products.map((item, i) => (
-              <Container key={i}>
-                <div className="left">
-                  <div className="active-image">
-                    <img src={item.images[activeIndex]} alt="" />
-                    <AiOutlineRight
-                      className="icon-right"
-                      onClick={() => nextImage(item.images)}
-                    />
-                    <AiOutlineLeft
-                      className="icon-left"
-                      onClick={() => prevImage(item.images)}
-                    />
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <Error />
+      ) : data ? (
+        <>
+          <Container>
+            <div className="left">
+              <div className="active-image">
+                <img src={data.product.images[activeIndex]} alt="" />
+                <AiOutlineRight
+                  className="icon-right"
+                  onClick={() => nextImage(data.product.images)}
+                />
+                <AiOutlineLeft
+                  className="icon-left"
+                  onClick={() => prevImage(data.product.images)}
+                />
+              </div>
+              <div className="image-array">
+                {data.product.images.map((img, i) => (
+                  <div
+                    className={
+                      activeIndex === i ? "image-box active" : "image-box"
+                    }
+                    onClick={() => selectActive(i)}
+                    key={i}
+                  >
+                    <img src={img} alt="" />
                   </div>
-                  <div className="image-array">
-                    {item.images.map((img, i) => (
-                      <div
-                        className={
-                          activeIndex === i ? "image-box active" : "image-box"
-                        }
-                        onClick={() => selectActive(i)}
-                        key={i}
-                      >
-                        <img src={img} alt="" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="right">
-                  <p>{item.title}</p>
-                  <div className="price">
-                    <span className="red">
-                      ₦
-                      {item.price
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </span>
-                    <span>
-                      <strike>
-                        ₦
-                        {item.oldPrice
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      </strike>
-                    </span>
-                  </div>
-                  <span className="ship">
-                    <a href="#">Shipping</a> calculated at checkout.
-                  </span>
-                  <div className="size">
-                    <p>Size: {item.size[activeSize]}</p>
-                    <div className="flex">
-                      {item.size.map((size, i) => (
-                        <div
-                          className={activeSize === i ? "box active" : "box"}
-                          onClick={() => selectSize(i)}
-                          key={i}
-                        >
-                          {size}
-                        </div>
-                      ))}
+                ))}
+              </div>
+            </div>
+            <div className="right">
+              <p>{data.product.title}</p>
+              <div className="price">
+                <span className="red">
+                  ₦
+                  {data.product.price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
+                <span>
+                  <strike>
+                    ₦
+                    {data.product.oldPrice
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </strike>
+                </span>
+              </div>
+              <span className="ship">
+                <a href="#">Shipping</a> calculated at checkout.
+              </span>
+              <div className="size">
+                <p>Size: {data.product.size[activeSize]}</p>
+                <div className="flex">
+                  {data.product.size.map((size, i) => (
+                    <div
+                      className={activeSize === i ? "box active" : "box"}
+                      onClick={() => selectSize(i)}
+                      key={i}
+                    >
+                      {size}
                     </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
 
-                  <div className="quantity">
-                    <p>Quantity:</p>
-                    <div className="add-container">
-                      <button onClick={decreaseCount}>-</button>
-                      <p>{count}</p>
-                      <button onClick={increaseCount}>+</button>
-                    </div>
-                  </div>
-                  <br />
-                  <AddToCartButton
-                    item={{ ...item, activeSize: item.size[activeSize] }}
-                    handleAddToCart={handleAddToCart}
-                  />
-                  <div className="other-details">
-                    <ul>
-                      <li>Exquisite and Durable. </li>
-                      <li>Comfy Sneakers</li>
-                      <li>Classy and Trendy</li>
-                      <li>Nationwide Delivery</li>
-                    </ul>
-                  </div>
+              <div className="quantity">
+                <p>Quantity:</p>
+                <div className="add-container">
+                  <button onClick={decreaseCount}>-</button>
+                  <p>{count}</p>
+                  <button onClick={increaseCount}>+</button>
                 </div>
-              </Container>
-            ))}
-          </>
-        ) : null}
-      </>
+              </div>
+              <br />
+              <AddToCartButton
+                item={{ ...data.product, activeSize: data.product.size[activeSize] }}
+                handleAddToCart={handleAddToCart}
+              />
+              <div className="other-details">
+                <ul>
+                  <li>Exquisite and Durable. </li>
+                  <li>Comfy Sneakers</li>
+                  <li>Classy and Trendy</li>
+                  <li>Nationwide Delivery</li>
+                </ul>
+              </div>
+            </div>
+          </Container>
+        </>
+      ) : null}
     </>
   );
 }
 
-export default FeaturedCollection;
+export default SingleProduct;
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -298,8 +283,8 @@ const Container = styled.div`
           @media (max-width: 768px) {
             font-size: 0.7rem;
           }
-          width: 40px;
-          height: 40px;
+          width: 50px;
+          height: 50px;
           display: flex;
           justify-content: center;
           font-size: 1vw;

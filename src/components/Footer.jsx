@@ -63,7 +63,7 @@ const Top = styled.div`
     height: auto;
   }
   width: 100%;
-  height: 40vh;
+  height: 30vh;
   display: flex;
   justify-content: space-between;
   ul {

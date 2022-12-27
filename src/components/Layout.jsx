@@ -4,10 +4,12 @@ import {Outlet} from 'react-router-dom'
 import Footer from './Footer'
 import styled from 'styled-components'
 import NewsLetter from './NewsLetter'
+import Nav from './Nav'
 function Layout() {
   return (
     <Container>
       <Header/>
+      <Nav/>
       <Outlet/>
       <NewsLetter />
       <Footer/>
@@ -23,5 +25,4 @@ const Container = styled.div`
 }
   width: 100%;
   min-height: 100vh;
-  position: relative;
 `

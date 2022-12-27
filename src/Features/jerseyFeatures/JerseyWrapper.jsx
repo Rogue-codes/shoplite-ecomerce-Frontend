@@ -6,7 +6,7 @@ import Error from "../../widgets/errorScreen/Error";
 import Loading from "../../widgets/loadingScreen/Loading";
 import Modal from "../../widgets/modal/Modal";
 
-function AccessoriesWrapper({ isLoading, error, data }) {
+function JerseyWrapper({ isLoading, error, data }) {
   const [openModal, setOpenModal] = useState(false);
 
   const open = () => setOpenModal(true);
@@ -30,11 +30,10 @@ function AccessoriesWrapper({ isLoading, error, data }) {
         <>
           {data.products.map((item, i) => (
             <>
-              <Card>
+              <Card key={item._id}>
                 <Image>
                   <img src={item.coverImage} alt="" />
                 </Image>
-
                 <Link to={`/products/${item._id}`}>
                   <Text>
                     <p>{item.title}</p>
@@ -85,7 +84,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
   );
 }
 
-export default AccessoriesWrapper;
+export default JerseyWrapper;
 const Container = styled.section`
   @media (max-width: 768px) {
     width: 100%;
@@ -115,7 +114,7 @@ const Card = styled.div`
       transition: all 0.5s linear;
     }
   }
-  a {
+  a{
     text-decoration: none;
     color: black;
   }

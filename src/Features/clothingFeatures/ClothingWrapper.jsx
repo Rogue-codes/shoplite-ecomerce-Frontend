@@ -89,6 +89,8 @@ const Container = styled.section`
   @media (max-width: 768px) {
     width: 100%;
     margin-left: 0;
+    justify-content: center;
+    gap: 2%;
   }
   width: 75%;
   min-height: 100vh;

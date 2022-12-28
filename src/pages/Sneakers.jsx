@@ -20,15 +20,25 @@ function Sneakers() {
     priceVal = `price[lte]=${price}`;
   }
 
-//   filter by brand
+  //   filter by brand
   let query = `brand=${productBrand}`;
   if (!productBrand) {
     query = "";
   }
-  const { isLoading, data, error } = useGetAllSneakersQuery({ query, sortBy, priceVal });
+  const { isLoading, data, error } = useGetAllSneakersQuery({
+    query,
+    sortBy,
+    priceVal,
+  });
   return (
     <Container>
-      <MobileFilter />
+      <MobileFilter
+        productBrand={productBrand}
+        setProductBrand={setProductBrand}
+        setsortBy={setsortBy}
+        setPrice={setPrice}
+        price={price}
+      />
       <Filter
         productBrand={productBrand}
         setProductBrand={setProductBrand}

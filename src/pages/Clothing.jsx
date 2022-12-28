@@ -22,11 +22,21 @@ function Clothing() {
   if (!productBrand) {
     query = "";
   }
-  const { isLoading, data, error } = useGetAllShirtsQuery({ query, sortBy, priceVal });
+  const { isLoading, data, error } = useGetAllShirtsQuery({
+    query,
+    sortBy,
+    priceVal,
+  });
 
   return (
     <Container>
-      <MobileFilter />
+      <MobileFilter
+        productBrand={productBrand}
+        setProductBrand={setProductBrand}
+        setsortBy={setsortBy}
+        setPrice={setPrice}
+        price={price}
+      />
       <Filter
         productBrand={productBrand}
         setProductBrand={setProductBrand}

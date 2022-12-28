@@ -1,35 +1,53 @@
 import React, { useState } from "react";
 import { BsFillFilterCircleFill } from "react-icons/bs";
 import styled from "styled-components";
-import Select from "react-select";
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "nike" },
+  { value: "Ross" },
+  { value: "prada" },
+  { value: "John Foster" },
+  { value: "CK" },
+  { value: "adidas" },
+  { value: "jordan" },
+  { value: "john mendson" },
+  { value: "polo ralph" },
+  { value: "nudie" },
+  { value: "Fngeen" },
+  { value: "Under Armour" },
+  { value: "Carhartt" },
+  { value: "LV" },
+  { value: "Unavowed" },
+  { value: "varsity" },
 ];
-function MobileFilter() {
+function MobileFilter({
+  productBrand,
+  setProductBrand,
+  setsortBy,
+  price,
+  setPrice,
+}) {
   const [showFilter, setShowFilter] = useState(false);
   const toggleFilter = () => setShowFilter(!showFilter);
-
-  const [selectedOption, setSelectedOption] = useState(null);
 
   // Create a state variable for each checkbox
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
 
   //   price slider
-  const [range, setRange] = useState(0);
+  const [range, setRange] = useState(price);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(100000);
 
   const handleChange = (e) => {
     setRange(e.target.value);
   };
+  setPrice(range);
 
   function handleCheckbox1Change(event) {
     // Set the state of checkbox1 to the opposite of its current value
     setCheckbox1(!checkbox1);
+    setsortBy("-price");
     // Uncheck checkbox2 if checkbox1 is checked
     if (event.target.checked) {
       setCheckbox2(false);
@@ -39,10 +57,15 @@ function MobileFilter() {
   function handleCheckbox2Change(event) {
     // Set the state of checkbox2 to the opposite of its current value
     setCheckbox2(!checkbox2);
+    setsortBy("price");
     // Uncheck checkbox1 if checkbox2 is checked
     if (event.target.checked) {
       setCheckbox1(false);
     }
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
   return (
     <Container hgt={showFilter ? "auto" : "8vh"}>
@@ -50,13 +73,20 @@ function MobileFilter() {
         <BsFillFilterCircleFill size="2rem" /> <p>FILTER</p>
       </header>
       <FilterContainer>
-        <p>Gender:</p>
-        <Select
-          options={options}
-          defaultValue={selectedOption}
-          onChange={setSelectedOption}
-          className="select"
-        />
+        <p>Brand:</p>
+        <select
+          name=""
+          id=""
+          value={productBrand}
+          onChange={(e) => setProductBrand(e.target.value)}
+        >
+          <option value="">All</option>
+          {options.map((item, i) => (
+            <option value={item.value} key={i}>
+              {capitalizeFirstLetter(item.value)}
+            </option>
+          ))}
+        </select>
         <br />
         <div className="price">
           <p>Price</p>
@@ -68,7 +98,7 @@ function MobileFilter() {
               checked={checkbox1}
               onChange={handleCheckbox1Change}
             />
-            Checkbox 1
+            Descending
           </label>{" "}
           <br />
           <label>
@@ -77,19 +107,14 @@ function MobileFilter() {
               checked={checkbox2}
               onChange={handleCheckbox2Change}
             />
-            Checkbox 2
+            Ascending
           </label>
         </div>{" "}
         <br />
-        <p>Brand:</p>
-        <Select
-          options={options}
-          defaultValue={selectedOption}
-          onChange={setSelectedOption}
-          className="select"
-        />
-        <br />
-        <p>price range: {range}</p>
+        <p>
+          price range: ( less than) ₦
+          {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </p>
         <div className="range">
           <div className="field">
             <div className="left">{min}</div>
@@ -99,7 +124,7 @@ function MobileFilter() {
               max={max}
               value={range}
               step="10000"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               oninput="rangeValue.innerText = this.value"
             />
             <div className="right">{max}</div>
@@ -142,6 +167,13 @@ const FilterContainer = styled.div`
   padding: 1%;
   p {
     padding-bottom: 5%;
+  }
+  select {
+    width: 100%;
+    height: 8vh;
+    margin-bottom: 5%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+      rgb(209, 213, 219) 0px 0px 0px 1px inset;
   }
   .price {
     margin: 0 auto;

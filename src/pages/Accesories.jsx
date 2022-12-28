@@ -25,11 +25,17 @@ function Accesories() {
   const { isLoading, data, error } = useGetAllAccesoriesQuery({
     query,
     sortBy,
-    priceVal
+    priceVal,
   });
   return (
     <Container>
-      <MobileFilter />
+      <MobileFilter
+        productBrand={productBrand}
+        setProductBrand={setProductBrand}
+        setsortBy={setsortBy}
+        setPrice={setPrice}
+        price={price}
+      />
       <Filter
         productBrand={productBrand}
         setProductBrand={setProductBrand}

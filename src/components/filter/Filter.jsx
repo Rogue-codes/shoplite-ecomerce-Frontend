@@ -20,10 +20,6 @@ const options = [
 ];
 
 function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
-  // const [selectedOption, setSelectedOption] = useState();
-
-  // setProductBrand(options.value)
-  // console.log(selectedOption.value)
   // Create a state variable for each checkbox
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
@@ -37,7 +33,6 @@ function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
     setRange(e.target.value);
   };
   setPrice(range)
-  console.log(range)
   
 
   function handleCheckbox1Change(event) {
@@ -60,6 +55,10 @@ function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
     }
   }
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <Container>
       <p>Brand:</p>
@@ -69,10 +68,10 @@ function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
         value={productBrand}
         onChange={(e) => setProductBrand(e.target.value)}
       >
-        <option value="">none</option>
+        <option value="">All</option>
         {options.map((item, i) => (
           <option value={item.value} key={i}>
-            {item.value}
+          {capitalizeFirstLetter(item.value)}
           </option>
         ))}
       </select>

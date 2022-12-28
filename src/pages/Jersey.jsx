@@ -23,10 +23,20 @@ function Jersey() {
   if (!productBrand) {
     query = "";
   }
-  const { isLoading, data, error } = useGetAllJerseysQuery({ query, sortBy, priceVal });
+  const { isLoading, data, error } = useGetAllJerseysQuery({
+    query,
+    sortBy,
+    priceVal,
+  });
   return (
     <Container>
-      <MobileFilter />
+      <MobileFilter
+        productBrand={productBrand}
+        setProductBrand={setProductBrand}
+        setsortBy={setsortBy}
+        setPrice={setPrice}
+        price={price}
+      />
       <Filter
         productBrand={productBrand}
         setProductBrand={setProductBrand}

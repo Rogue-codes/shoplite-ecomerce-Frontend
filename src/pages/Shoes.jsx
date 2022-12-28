@@ -19,7 +19,7 @@ function Shoes() {
   if (price < 100000) {
     priceVal = `price[lte]=${price}`;
   }
-  
+
   // filter by brand
   let query = `brand=${productBrand}`;
   if (!productBrand) {
@@ -32,7 +32,13 @@ function Shoes() {
   });
   return (
     <Container>
-      <MobileFilter />
+      <MobileFilter
+        productBrand={productBrand}
+        setProductBrand={setProductBrand}
+        setsortBy={setsortBy}
+        setPrice={setPrice}
+        price={price}
+      />
       <Filter
         productBrand={productBrand}
         setProductBrand={setProductBrand}

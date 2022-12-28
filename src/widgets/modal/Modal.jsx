@@ -54,6 +54,7 @@ function Modal(props) {
 
   const handleAddToCart = (item) => {
     dispatch(addToCart({...item, activeSize: item.size[active]}));
+    props.handleClose()
   };
   return (
     <Backdrop handleClose={props.handleClose}>

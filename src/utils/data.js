@@ -22,11 +22,11 @@ export const navLinks = [
     title: "Accesories",
   },
   {
-    to: "/blog",
+    to: "/",
     title: "Blog",
   },
   {
-    to: "/contact",
+    to: "/",
     title: "Contact",
   },
 ];

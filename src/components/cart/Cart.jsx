@@ -58,7 +58,7 @@ function Cart({ showCart, setShowCart }) {
         <p className="empty">cart is empty</p>
       ) : (
         cartItem.map((item) => (
-          <div className="cart_Item" key={item.id}>
+          <div className="cart_Item" key={item._id}>
             <div className="delete" onClick={() => deleteItemFromCart(item)}>
               <MdDelete color="red" size="1.2rem" />
             </div>
@@ -149,6 +149,9 @@ function Cart({ showCart, setShowCart }) {
 export default Cart;
 
 const Container = styled(motion.div)`
+  @media (max-width: 768px) {
+    width: 90%;
+  }
   width: 35%;
   padding: 1% 0%;
   height: 100vh;
@@ -159,6 +162,9 @@ const Container = styled(motion.div)`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   background: #fff;
   z-index: 999999999;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .header {
     display: flex;
     border-bottom: 1px solid lightgrey;
@@ -192,10 +198,16 @@ const Container = styled(motion.div)`
         height: 70%;
         padding: 2%;
         .title {
+          @media (max-width: 768px) {
+            font-size: 1rem;
+          }
           font-size: 1vw;
           font-weight: 500;
         }
         p {
+          @media (max-width: 768px) {
+            font-size: 1rem;
+          }
           font-size: 1vw;
           margin-top: 5%;
         }
@@ -213,6 +225,9 @@ const Container = styled(motion.div)`
           display: flex;
           justify-content: space-between;
           button {
+            @media (max-width: 768px) {
+              font-size: 1rem;
+            }
             width: 20%;
             font-size: 1.5vw;
             background: transparent;
@@ -249,6 +264,9 @@ const Container = styled(motion.div)`
       padding: 2%;
       cursor: pointer;
       p {
+        @media (max-width: 768px) {
+          font-size: 0.7rem;
+        }
         font-size: 1vw;
       }
     }
@@ -262,17 +280,24 @@ const Container = styled(motion.div)`
     width: 90%;
     margin: auto;
     height: 25vh;
-    background: #000;
+    background: #333;
     margin-top: 5%;
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     span {
+      @media (max-width: 768px) {
+        font-size: 1rem;
+        width: 70%;
+      }
       text-align: center;
     }
   }
   .total {
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
     width: 90%;
     margin: auto;
     height: 25vh;

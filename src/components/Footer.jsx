@@ -74,13 +74,13 @@ const Top = styled.div`
     list-style-type: none;
     li {
       @media (max-width: 768px) {
-        font-size: 0.5rem;
+        font-size: 1rem;
       }
       margin-bottom: 2%;
       font-size: 1vw;
       &:nth-child(1) {
         @media (max-width: 768px) {
-          font-size: 0.7rem;
+          font-size: 1.5rem;
         }
         font-size: 1.3vw;
         margin-bottom: 5%;
@@ -94,8 +94,8 @@ const Bottom = styled.div`
   margin-top: 5%;
   .icons {
     @media (max-width: 768px) {
-      font-size: .7rem;
-    }
+          font-size: 1.5rem;
+        }
     width: 90%;
     margin-bottom: 2%;
     font-size: 1.2rem;
@@ -105,7 +105,7 @@ const Bottom = styled.div`
   }
   .date{
     @media (max-width: 768px) {
-      font-size: .7rem;
+      font-size: 1rem;
     }
   }
 `;

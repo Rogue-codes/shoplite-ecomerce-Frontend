@@ -5,8 +5,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { navLinks } from "../../utils/data";
-import { NavLink } from "react-router-dom";
-function MobileNav() {
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+function MobileNav({cart}) {
   const [menuWrapper, setMenuWrapper] = useState(false);
   const variants = {
     hide: { opacity: 0 },
@@ -15,6 +16,8 @@ function MobileNav() {
     slideIn: { x: "0%" },
     slideOut: { x: "-100%" },
   };
+
+  const cartQuantity = useSelector((state)=>state.cart.cartItems)
   return (
     <Container>
       <header>
@@ -26,11 +29,11 @@ function MobileNav() {
         </div>
 
         <div className="logo">
-          <h1>ShopLite</h1>
+          <Link to='/'>ShopLite</Link>
         </div>
 
-        <div className="cart">
-          <BsFillCartPlusFill size="2rem" />
+        <div className="cart" onClick={cart}>
+          <BsFillCartPlusFill size="2rem" /><p>{cartQuantity.length}</p>
         </div>
       </div>
       {menuWrapper && (
@@ -58,13 +61,14 @@ function MobileNav() {
                   className={({ isActive }) =>
                     isActive ? "active" : "inactive"
                   }
+                  onClick={() => setMenuWrapper(false)}
                 >
                   {link.title}
                 </NavLink>
               ))}
             </ul>
             <div className="login">
-              <button>login</button>
+              <Link to='/account/login' onClick={() => setMenuWrapper(false)}><button>login</button></Link>
             </div>
           </motion.div>
         </Wrapper>
@@ -98,6 +102,23 @@ const Container = styled.nav`
     margin-top: 5%;
     padding: 2%;
   }
+  .cart{
+    p{
+      position: absolute;
+      right: 1%;
+      font-weight: 800;
+      font-size:1rem;
+      top: 55%;
+    }
+  }
+  .logo{
+    a{
+      font-size: 2rem;
+      text-decoration: none;
+      font-weight: 800;
+      color: black;
+    }
+  }
 `;
 const Wrapper = styled(motion.div)`
   width: 100%;
@@ -129,7 +150,7 @@ const Wrapper = styled(motion.div)`
       padding-top: 25%;
       a {
         border-bottom: 1px solid #2098ee;
-        padding: 5%;
+        padding: 3%;
         display: block;
         margin-bottom: 10%;
       }

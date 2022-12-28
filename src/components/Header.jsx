@@ -43,6 +43,8 @@ function Header() {
     closed: { opacity: 0, y: "-10%", transition: { delay: 2.5 } },
   };
   const [showDropDown, setShowDropDown] = useState(false);
+
+  const cartItem = useSelector((state) => state.cart.cartItems);
   return (
     <Container>
       {showAdvert && (
@@ -115,9 +117,10 @@ function Header() {
         <div className="cart" onClick={cart}>
           <span>Cart</span>
           <BsFillCartFill />
+          <p>{cartItem.length}</p>
         </div>
       </div>
-      <MobileNav />
+      <MobileNav cart={cart} />
       <Cart showCart={showCart} setShowCart={setShowCart}/>
 
     </Container>
@@ -241,6 +244,14 @@ const Container = styled.div`
       gap: 5%;
       width: 10%;
       cursor: pointer;
+      position: relative;
+      p{
+        font-size: 1vw;
+        position: absolute;
+        top: -10%;
+        right: 45%;
+        font-weight: 800;
+      }
     }
   }
   .dropDwn {

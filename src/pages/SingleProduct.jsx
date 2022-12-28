@@ -225,8 +225,7 @@ const Container = styled.div`
         height: 25vh;
         margin-bottom: 8px;
         &:hover {
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px,
-            rgb(51, 51, 51) 0px 0px 0px 3px;
+          border: 2px solid lightgrey;
         }
         img {
           @media (max-width: 768px) {
@@ -234,12 +233,11 @@ const Container = styled.div`
           }
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
       }
       .active {
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px,
-          rgb(51, 51, 51) 0px 0px 0px 3px;
+        border: 2px solid lightgrey;
       }
     }
   }

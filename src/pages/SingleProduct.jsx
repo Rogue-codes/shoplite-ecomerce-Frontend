@@ -8,6 +8,7 @@ import Error from "../widgets/errorScreen/Error";
 import Loading from "../widgets/loadingScreen/Loading";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
+import RelatedProducts from "../components/relatedptoducts/RelatedProducts";
 
 function SingleProduct() {
   const { id } = useParams();
@@ -57,6 +58,12 @@ function SingleProduct() {
   const handleAddToCart = (item) => {
     dispatch(addToCart(item));
   };
+
+  let category
+  if(data){
+    category = data.product.category
+    console.log(category)
+  }
 
   return (
     <>
@@ -154,6 +161,8 @@ function SingleProduct() {
           </Container>
         </>
       ) : null}
+
+      <RelatedProducts category={category}/>
     </>
   );
 }

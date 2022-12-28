@@ -12,10 +12,12 @@ import SingleProduct from "./pages/SingleProduct";
 import Sneakers from "./pages/Sneakers";
 import { Toaster } from "react-hot-toast";
 import MyAccount from "./pages/MyAccount";
+import ScrollToTop from "./widgets/scrollToTop/ScrollToTop";
 function App() {
   return (
     <div className="App">
       <Router>
+       <ScrollToTop/>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

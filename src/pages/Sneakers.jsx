@@ -14,10 +14,18 @@ function Sneakers() {
   // filter by price
   const [price, setPrice] = useState(100000);
 
+  const [priceMobile, setPriceMobile] = useState(100000);
+
   let priceVal = ``;
 
   if (price < 100000) {
     priceVal = `price[lte]=${price}`;
+  }
+
+  let mobilePriceVal = ``;
+
+  if (priceMobile < 100000) {
+    mobilePriceVal = `price[lte]=${priceMobile}`;
   }
 
   //   filter by brand
@@ -29,6 +37,7 @@ function Sneakers() {
     query,
     sortBy,
     priceVal,
+    mobilePriceVal
   });
   return (
     <Container>
@@ -36,8 +45,8 @@ function Sneakers() {
         productBrand={productBrand}
         setProductBrand={setProductBrand}
         setsortBy={setsortBy}
-        setPrice={setPrice}
-        price={price}
+        setPriceMobile={setPriceMobile}
+        priceMobile={priceMobile}
       />
       <Filter
         productBrand={productBrand}

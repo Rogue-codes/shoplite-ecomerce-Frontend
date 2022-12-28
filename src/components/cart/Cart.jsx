@@ -11,6 +11,7 @@ import {
   getTotal,
   increaseQuantityInCart,
 } from "../../redux/cartSlice";
+import { Link } from "react-router-dom";
 
 function Cart({ showCart, setShowCart }) {
   const cartItem = useSelector((state) => state.cart.cartItems);
@@ -67,7 +68,13 @@ function Cart({ showCart, setShowCart }) {
             </div>
             <div className="right">
               <div className="top">
-                <h2 className="title">{item.title}</h2>
+                <Link
+                  to={`/products/${item._id}`}
+                  className="title"
+                  onClick={() => setShowCart(false)}
+                >
+                  {item.title}
+                </Link>
                 <p>Size: {item.activeSize}</p>
               </div>
               <div className="bottom">
@@ -203,6 +210,7 @@ const Container = styled(motion.div)`
           }
           font-size: 1vw;
           font-weight: 500;
+          color: #000;
         }
         p {
           @media (max-width: 768px) {

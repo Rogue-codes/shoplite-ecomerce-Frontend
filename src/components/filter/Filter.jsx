@@ -99,7 +99,7 @@ function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
         </label>
       </div>{" "}
       <br />
-      <p>price range:( less than) ₦{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+      <p>price range:( less than) ₦{range.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
       <div className="range">
         <div className="field">
           <div className="left">{min}</div>
@@ -110,9 +110,9 @@ function Filter({ productBrand, setProductBrand, setsortBy, price, setPrice }) {
             value={range}
             step="10000"
             onChange={(e)=>handleChange(e)}
-            oninput="rangeValue.innerText = this.value"
+            // oninput="rangeValue.innerText = this.value"
           />
-          <div className="right">{max}</div>
+          <div className="right">{range}</div>
         </div>
       </div>
     </Container>

@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Error from "../../widgets/errorScreen/Error";
@@ -29,7 +29,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
       ) : data ? (
         <>
           {data.products.map((item, i) => (
-            <>
+            <Fragment key={item._id}>
               <Card>
                 <Image>
                   <img src={item.coverImage} alt="" />
@@ -77,7 +77,7 @@ function AccessoriesWrapper({ isLoading, error, data }) {
               >
                 {openModal && <Modal handleClose={close} item={selectedItem} />}
               </AnimatePresence>
-            </>
+            </Fragment>
           ))}
         </>
       ) : null}

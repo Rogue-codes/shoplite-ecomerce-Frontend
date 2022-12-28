@@ -24,8 +24,8 @@ function MobileFilter({
   productBrand,
   setProductBrand,
   setsortBy,
-  price,
-  setPrice,
+  priceMobile,
+  setPriceMobile
 }) {
   const [showFilter, setShowFilter] = useState(false);
   const toggleFilter = () => setShowFilter(!showFilter);
@@ -35,14 +35,15 @@ function MobileFilter({
   const [checkbox2, setCheckbox2] = useState(false);
 
   //   price slider
-  const [range, setRange] = useState(price);
+  const [range, setRange] = useState(priceMobile);
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100000);
+  const [max, setMax] = useState(priceMobile);
 
   const handleChange = (e) => {
     setRange(e.target.value);
   };
-  setPrice(range);
+  setPriceMobile(range);
+  
 
   function handleCheckbox1Change(event) {
     // Set the state of checkbox1 to the opposite of its current value
@@ -113,7 +114,7 @@ function MobileFilter({
         <br />
         <p>
           price range: ( less than) ₦
-          {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          {range.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </p>
         <div className="range">
           <div className="field">
@@ -125,9 +126,9 @@ function MobileFilter({
               value={range}
               step="10000"
               onChange={(e) => handleChange(e)}
-              oninput="rangeValue.innerText = this.value"
+              // onInput="rangeValue.innerText = this.value"
             />
-            <div className="right">{max}</div>
+            <div className="right">{range}</div>
           </div>
         </div>
       </FilterContainer>
@@ -163,7 +164,7 @@ const Container = styled.div`
 
 const FilterContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   padding: 1%;
   p {
     padding-bottom: 5%;

@@ -95,6 +95,7 @@ const Container = styled.section`
   width: 75%;
   min-height: 100vh;
   margin-left: 25%;
+  margin-bottom: 15%;
   display: flex;
   justify-content: space-between;
   padding: 2%;
@@ -103,9 +104,11 @@ const Container = styled.section`
 const Card = styled.div`
   @media (max-width: 768px) {
     width: 48%;
+    height: auto;
   }
   width: 33%;
-  height: 60vh;
+  /* min-height: 60vh; */
+  height: auto;
   margin-top: 5%;
   position: relative;
   transition: all 0.5s linear;
@@ -142,6 +145,9 @@ const Image = styled.div`
   }
 `;
 const Text = styled.div`
+@media (max-width: 768px) {
+  height: auto;
+}
   width: 100%;
   height: 30%;
   p {

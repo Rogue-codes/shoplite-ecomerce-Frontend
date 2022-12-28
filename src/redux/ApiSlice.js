@@ -20,24 +20,24 @@ export const productApi = createApi({
       query: (id) => `/product/${id}`,
     }),
     getAllShirts: builder.query({
-      query: ({ query, sortBy, priceVal }) =>
-        `/product/all?category=shirt&${priceVal}&${query}&sort=${sortBy}`,
+      query: ({ query, sortBy, priceVal, mobilePriceVal }) =>
+        `/product/all?category=shirt&${priceVal}${mobilePriceVal}&${query}&sort=${sortBy}`,
     }),
     getAllShoes: builder.query({
-      query: ({ query, sortBy, priceVal }) =>
-        `/product/all?category=shoe&${priceVal}&${query}&sort=${sortBy}`,
+      query: ({ query, sortBy, priceVal,mobilePriceVal }) =>
+        `/product/all?category=shoe&${priceVal}${mobilePriceVal}&${query}&sort=${sortBy}`,
     }),
     getAllSneakers: builder.query({
-      query: ({ query, sortBy, priceVal }) =>
-        `/product/all?category=sneakers&${priceVal}&${query}&sort=${sortBy}`,
+      query: ({ query, sortBy, priceVal, mobilePriceVal }) =>
+        `/product/all?category=sneakers&${priceVal}${mobilePriceVal}&${query}&sort=${sortBy}`,
     }),
     getAllJerseys: builder.query({
-      query: ({ query, sortBy, priceVal }) =>
-        `/product/all?category=jersey&${priceVal}&${query}&sort=${sortBy}`,
+      query: ({ query, sortBy, priceVal, mobilePriceVal }) =>
+        `/product/all?category=jersey&${priceVal}${mobilePriceVal}&${query}&sort=${sortBy}`,
     }),
     getAllAccesories: builder.query({
-      query: ({ query, sortBy, priceVal }) =>
-        `/product/all?category=accesories&${priceVal}&${query}&sort=${sortBy}`,
+      query: ({ query, sortBy, priceVal, mobilePriceVal }) =>
+        `/product/all?category=accesories&${priceVal}${mobilePriceVal}&${query}&sort=${sortBy}`,
     }),
 
     getUser: builder.query({

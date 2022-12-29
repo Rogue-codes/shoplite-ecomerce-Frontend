@@ -69,6 +69,7 @@ function Register() {
         userLogin({
           user: data.name,
           accessToken: data.token,
+          id: data.id,
         })
       );
     } else if (error) {

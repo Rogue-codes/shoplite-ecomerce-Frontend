@@ -8,7 +8,6 @@ import {
   BsInstagram,
   BsPinterest,
   BsYoutube,
-  BsFillCartFill,
   BsSearch,
   BsHeartFill,
 } from "react-icons/bs";
@@ -44,7 +43,6 @@ function Header() {
   };
   const [showDropDown, setShowDropDown] = useState(false);
 
-  const cartItem = useSelector((state) => state.cart.cartItems);
 
   const [searchVal, setSearchVal] = useState("");
 

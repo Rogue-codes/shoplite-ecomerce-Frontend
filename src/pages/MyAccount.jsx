@@ -49,6 +49,10 @@ function MyAccount() {
 export default MyAccount;
 
 const Container = styled.div`
+  @media (max-width: 768px) {
+    flex-direction: column;
+    min-height: 60vh;
+  }
   font-family: "Roboto", sans-serif;
   width: 100%;
   min-height: 100vh;
@@ -56,6 +60,11 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   .left__pane {
+    @media (max-width: 768px) {
+      width: 100%;
+      height: auto;
+      margin-bottom: 5%;
+    }
     width: 25%;
     height: 100vh;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
@@ -87,6 +96,9 @@ const Container = styled.div`
       }
     }
     .title {
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
       color: black;
       font-size: 1.4vw;
       padding: 5%;
@@ -100,6 +112,9 @@ const Container = styled.div`
     }
   }
   .right__pane {
+    @media (max-width: 768px) {
+      width: 100%;
+    }
     width: 73%;
     height: 100vh;
   }

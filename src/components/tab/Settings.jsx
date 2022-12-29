@@ -26,6 +26,10 @@ const Container = styled.div`
     margin-top: 5%;
   }
   form {
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: 2%;
+    }
     width: 50%;
     margin: 0 auto;
     margin-top: 5%;
@@ -42,10 +46,16 @@ const Container = styled.div`
         outline: none;
       }
       &::placeholder {
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
         font-size: 1.3vw;
       }
     }
     button {
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
       width: 100%;
       height: 8vh;
       margin-top: 5%;

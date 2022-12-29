@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 import { HiMenu } from "react-icons/hi";
-import { BsFillCartPlusFill } from "react-icons/bs";
+import { BsFillCartPlusFill, BsHeartFill } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { navLinks } from "../../utils/data";
-import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-function MobileNav({cart}) {
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../../redux/authSlice";
+import { toast } from "react-hot-toast";
+function MobileNav({ cart }) {
   const [menuWrapper, setMenuWrapper] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  const cartQuantity = useSelector((state) => state.cart.cartItems);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const cartQuantity = useSelector((state)=>state.cart.cartItems)
+  const handleLogOut = () => {
+    dispatch(userLogout());
+    toast.success("logout successful", {
+      position: "top-right",
+    });
+    navigate("/account/login");
+  };
   return (
     <Container>
       <header>
@@ -23,23 +36,24 @@ function MobileNav({cart}) {
         </div>
 
         <div className="logo">
-          <Link to='/'>ShopLite</Link>
+          <Link to="/">ShopLite</Link>
         </div>
 
         <div className="cart" onClick={cart}>
-          <BsFillCartPlusFill size="2rem" /><p>{cartQuantity.length}</p>
+          <BsFillCartPlusFill size="2rem" />
+          <p>{cartQuantity.length}</p>
         </div>
       </div>
       {menuWrapper && (
         <Wrapper
-          initial={{opacity:0}}
-          animate={{opacity:1}}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           onClick={() => setMenuWrapper(false)}
         >
           <motion.div
             className="menu-wrapper"
-            initial={{x:'-100vw'}}
-            animate={{x:0}}
+            initial={{ x: "-100vw" }}
+            animate={{ x: 0 }}
           >
             <AiOutlineClose
               className="ico"
@@ -60,9 +74,28 @@ function MobileNav({cart}) {
                 </NavLink>
               ))}
             </ul>
-            <div className="login">
-              <Link to='/account/login' onClick={() => setMenuWrapper(false)}><button>login</button></Link>
-            </div>
+            {user ? (
+              <>
+                <div className="auth">
+                  <p>Hi, {user}</p>
+                  <span>
+                    <FaUserAlt />
+                    <Link to="/me">View profile</Link>
+                  </span>
+                  <span>
+                    <BsHeartFill />
+                    <p>View Saved Items</p>
+                  </span>
+                  <p onClick={handleLogOut}>Log Out</p>
+                </div>
+              </>
+            ) : (
+              <div className="login">
+                <Link to="/account/login" onClick={() => setMenuWrapper(false)}>
+                  <button>login</button>
+                </Link>
+              </div>
+            )}
           </motion.div>
         </Wrapper>
       )}
@@ -95,17 +128,17 @@ const Container = styled.nav`
     margin-top: 5%;
     padding: 2%;
   }
-  .cart{
-    p{
+  .cart {
+    p {
       position: absolute;
       right: 1%;
       font-weight: 800;
-      font-size:1rem;
+      font-size: 1rem;
       top: 55%;
     }
   }
-  .logo{
-    a{
+  .logo {
+    a {
       font-size: 2rem;
       text-decoration: none;
       font-weight: 800;
@@ -158,6 +191,32 @@ const Wrapper = styled(motion.div)`
         background: #2098ee;
         color: white;
         font-size: 1rem;
+      }
+    }
+    .auth {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 15%;
+      height: 30vh;
+      color: #2098ee;
+      &:hover {
+        color: red;
+      }
+      p {
+        border-bottom: 1px solid #2098ee;
+      }
+      span {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5%;
+        border-bottom: 1px solid #2098ee;
+        a {
+          color: #2098ee;
+        }
       }
     }
   }

@@ -126,7 +126,7 @@ const Form = styled.form`
   width: 40%;
   h2 {
     @media (max-width: 768px) {
-      font-size: 1rem;
+      font-size: 2rem;
     }
     text-align: center;
     font-size: 2vw;

@@ -54,7 +54,9 @@ function Profile() {
             mode="wait"
             onExitComplete={() => null}
           >
-            {showModal && <EditModal handleClose={close} data={data} id ={data.user._id}  />}
+            {showModal && (
+              <EditModal handleClose={close} data={data} id={data.user._id} />
+            )}
           </AnimatePresence>
         </>
       ) : null}
@@ -69,21 +71,36 @@ const Container = styled.div`
   width: 100%;
   position: relative;
   .value {
+    @media (max-width: 768px) {
+      padding: 2%;
+    }
     margin-top: 5%;
     .label {
+      @media (max-width: 768px) {
+        font-size: 1rem;
+        margin-left: 0;
+      }
       margin-left: 10%;
       margin-bottom: 1%;
       font-size: 1.5vw;
     }
     .field {
+      @media (max-width: 768px) {
+        width: 100%;
+      }
       width: 80%;
       margin: 0 auto;
-      padding: 3%;
+      padding: 5% 3%;
       box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
         rgb(209, 213, 219) 0px 0px 0px 1px inset;
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      h2 {
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
+      }
     }
   }
   .edit {

@@ -9,13 +9,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 function MobileNav({cart}) {
   const [menuWrapper, setMenuWrapper] = useState(false);
-  const variants = {
-    hide: { opacity: 0 },
-    show: { opacity: 1 },
-    transition: { duration: 1, delay: 0.5 },
-    slideIn: { x: "0%" },
-    slideOut: { x: "-100%" },
-  };
+
 
   const cartQuantity = useSelector((state)=>state.cart.cartItems)
   return (
@@ -38,15 +32,14 @@ function MobileNav({cart}) {
       </div>
       {menuWrapper && (
         <Wrapper
-          initial={false}
-          animate={menuWrapper ? "show" : "hide"}
-          variants={variants}
+          initial={{opacity:0}}
+          animate={{opacity:1}}
+          onClick={() => setMenuWrapper(false)}
         >
           <motion.div
             className="menu-wrapper"
-            initial={false}
-            animate={menuWrapper ? "slideIn" : "slideOut"}
-            variants={variants}
+            initial={{x:'-100vw'}}
+            animate={{x:0}}
           >
             <AiOutlineClose
               className="ico"

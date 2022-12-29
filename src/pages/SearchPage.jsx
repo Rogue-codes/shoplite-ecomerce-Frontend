@@ -210,8 +210,8 @@ const Size = styled.div`
     @media (max-width: 768px) {
       font-size: 0.7rem;
     }
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 1px solid #000;
     display: flex;

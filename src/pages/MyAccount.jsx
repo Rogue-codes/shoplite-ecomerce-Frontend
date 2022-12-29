@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { avatar } from "../assets/data";
 import Profile from "../components/tab/Profile";
@@ -19,8 +18,6 @@ function MyAccount() {
   const selectActive = (i) => {
     setActive(i);
   };
-
-  const user = useSelector((state) => state.user.user);
   return (
     <Container>
       <div className="left__pane">
@@ -29,7 +26,7 @@ function MyAccount() {
             <img src={avatar} alt="" />
           </div>
           <p>
-            Hello <strong>{user}</strong>
+            Hello <strong>NNamdi</strong>
           </p>
         </div>
         {tab.map((item, i) => (

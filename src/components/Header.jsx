@@ -120,12 +120,6 @@ function Header() {
             )}
           </div>
         </div>
-
-        <div className="cart" onClick={cart}>
-          <span>Cart</span>
-          <BsFillCartFill />
-          <p>{cartItem.length}</p>
-        </div>
       </div>
       <MobileNav cart={cart} />
       <Cart showCart={showCart} setShowCart={setShowCart} />
@@ -244,23 +238,6 @@ const Container = styled.div`
             color: red;
           }
         }
-      }
-    }
-    .cart {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      font-size: 1.3vw;
-      gap: 2%;
-      gap: 5%;
-      width: 10%;
-      cursor: pointer;
-      position: relative;
-      p {
-        font-size: 1vw;
-        position: absolute;
-        top: -10%;
-        right: 38%;
       }
     }
   }

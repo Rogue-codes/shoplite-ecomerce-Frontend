@@ -21,14 +21,14 @@ export const navLinks = [
     to: "/accessories",
     title: "Accesories",
   },
-  {
-    to: "/",
-    title: "Blog",
-  },
-  {
-    to: "/",
-    title: "Contact",
-  },
+  // {
+  //   to: "/",
+  //   title: "Blog",
+  // },
+  // {
+  //   to: "/",
+  //   title: "Contact",
+  // },
 ];
 
 export const carouselData = [

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import Cart from '../components/cart/Cart'
+import Cart from "../components/cart/Cart";
 import {
   BsFacebook,
   BsTwitter,
@@ -27,9 +27,9 @@ function Header() {
   const [showAdvert, setShowAdvert] = useState(true);
   const [showCart, setShowCart] = useState(false);
 
-  const cart =()=>{
+  const cart = () => {
     setShowCart(true);
-  }
+  };
 
   const handleLogOut = () => {
     dispatch(userLogout());
@@ -45,6 +45,9 @@ function Header() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const cartItem = useSelector((state) => state.cart.cartItems);
+
+  const [searchVal, setSearchVal] = useState("");
+
   return (
     <Container>
       {showAdvert && (
@@ -70,10 +73,14 @@ function Header() {
           Shoplite
         </Link>
         <div className="search">
-          <input type="search" />
-          <button>
+          <input
+            type="search"
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+          />
+          <Link to={`/search/${searchVal}`}>
             <BsSearch size="1rem" />
-          </button>
+          </Link>
         </div>
         <div
           className="Account-Container"
@@ -121,8 +128,7 @@ function Header() {
         </div>
       </div>
       <MobileNav cart={cart} />
-      <Cart showCart={showCart} setShowCart={setShowCart}/>
-
+      <Cart showCart={showCart} setShowCart={setShowCart} />
     </Container>
   );
 }
@@ -173,39 +179,44 @@ const Container = styled.div`
       text-decoration: none;
     }
     .search {
-      width: 30%;
-      margin-left: 5%;
+      width: 40%;
+      box-shadow: rgba(165, 167, 169, 0.3) 0px 0px 0px 3px;
+      margin-left: 15%;
       display: flex;
       justify-content: center;
       align-items: center;
       input {
-        width: 80%;
-        height: 6vh;
+        width: 100%;
+        height: 8vh;
         border: none;
         padding: 2%;
         font-size: 1.2rem;
-        border: 1px solid #d4caca;
         &:focus {
           outline: none;
         }
       }
-      button {
-        height: 6vh;
-        width: 10%;
+      a {
+        height: 8vh;
+        width: 15%;
         margin-left: -10%;
         cursor: pointer;
-        border: 1px solid #000;
         border-left: none;
         background: #000;
         color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      button {
+        background: transparent;
       }
     }
     .Account-Container {
-      width: 22%;
+      width: 25%;
       padding: 1% 0%;
       cursor: pointer;
       height: 100%;
-      margin-left: 25%;
+      margin-left: 15%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -245,12 +256,11 @@ const Container = styled.div`
       width: 10%;
       cursor: pointer;
       position: relative;
-      p{
+      p {
         font-size: 1vw;
         position: absolute;
         top: -10%;
-        right: 45%;
-        font-weight: 800;
+        right: 38%;
       }
     }
   }

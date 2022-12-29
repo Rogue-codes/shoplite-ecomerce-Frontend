@@ -13,6 +13,7 @@ import Sneakers from "./pages/Sneakers";
 import { Toaster } from "react-hot-toast";
 import MyAccount from "./pages/MyAccount";
 import ScrollToTop from "./widgets/scrollToTop/ScrollToTop";
+import SearchPage from "./pages/SearchPage";
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,7 @@ function App() {
             <Route path="/account/login" element={<Login />} />
             <Route path="/account/register" element={<Register />} />
             <Route path="/me" element={<MyAccount />} />
+            <Route path="/search/:key" element={<SearchPage />} />
           </Route>
         </Routes>
         <Toaster />

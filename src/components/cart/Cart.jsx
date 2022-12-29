@@ -22,6 +22,11 @@ function Cart({ showCart, setShowCart }) {
     closed: { opacity: 0, x: "100%", transition: { delay: 0.5 } },
   };
 
+  const backdrop = {
+    open: { opacity: 1 },
+    closed: { opacity: 0, transition: { delay: 0.5 } },
+  };
+
   useEffect(() => {
     dispatch(getTotal());
   }, [cartItem, dispatch]);
@@ -41,119 +46,123 @@ function Cart({ showCart, setShowCart }) {
   const [showTextBox, setShowTextBox] = useState(false);
 
   return (
-    <Container
-      initial={false}
-      animate={showCart ? "open" : "closed"}
-      variants={variants}
-    >
-      <div className="header">
-        <GrClose
-          size="1.2rem"
-          cursor="pointer"
-          onClick={() => setShowCart(false)}
-        />
-        <h2>Cart</h2>
-        <p>{cartItem.length} item(s)</p>
-      </div>
-      {cartItem.length === 0 ? (
-        <p className="empty">cart is empty</p>
-      ) : (
-        cartItem.map((item) => (
-          <div className="cart_Item" key={item._id}>
-            <div className="delete" onClick={() => deleteItemFromCart(item)}>
-              <MdDelete color="red" size="1.2rem" />
-            </div>
-            <div className="left">
-              <img src={item.coverImage} alt="" />
-            </div>
-            <div className="right">
-              <div className="top">
-                <Link
-                  to={`/products/${item._id}`}
-                  className="title"
-                  onClick={() => setShowCart(false)}
-                >
-                  {item.title}
-                </Link>
-                <p>Size: {item.activeSize}</p>
+      <Container
+        initial={false}
+        animate={showCart ? "open" : "closed"}
+        variants={variants}
+      >
+        <div className="header">
+          <GrClose
+            size="1.2rem"
+            cursor="pointer"
+            onClick={() => setShowCart(false)}
+          />
+          <h2>Cart</h2>
+          <p>{cartItem.length} item(s)</p>
+        </div>
+        {cartItem.length === 0 ? (
+          <p className="empty">cart is empty</p>
+        ) : (
+          cartItem.map((item) => (
+            <div className="cart_Item" key={item._id}>
+              <div className="delete" onClick={() => deleteItemFromCart(item)}>
+                <MdDelete color="red" size="1.2rem" />
               </div>
-              <div className="bottom">
-                <div className="quantity">
-                  <button onClick={() => decreaseCartItem(item)}>-</button>
-                  <span>{item.itemQuantityInCart}</span>
-                  <button onClick={() => increaseCartItem(item)}>+</button>
+              <div className="left">
+                <img src={item.coverImage} alt="" />
+              </div>
+              <div className="right">
+                <div className="top">
+                  <Link
+                    to={`/products/${item._id}`}
+                    className="title"
+                    onClick={() => setShowCart(false)}
+                  >
+                    {item.title}
+                  </Link>
+                  <p>Size: {item.activeSize}</p>
                 </div>
-                <div className="price">
-                  <p>
-                    ₦
-                    {(item.itemQuantityInCart * item.price)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </p>
+                <div className="bottom">
+                  <div className="quantity">
+                    <button onClick={() => decreaseCartItem(item)}>-</button>
+                    <span>{item.itemQuantityInCart}</span>
+                    <button onClick={() => increaseCartItem(item)}>+</button>
+                  </div>
+                  <div className="price">
+                    <p>
+                      ₦
+                      {(item.itemQuantityInCart * item.price)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
 
-      {cartItem.length > 0 && (
-        <>
-          <div className="add__note">
-            <div className="head" onClick={() => setShowTextBox(!showTextBox)}>
-              <p>Leave a note with your order</p>
+        {cartItem.length > 0 && (
+          <>
+            <div className="add__note">
+              <div
+                className="head"
+                onClick={() => setShowTextBox(!showTextBox)}
+              >
+                <p>Leave a note with your order</p>
+                <span>
+                  {showTextBox ? <AiOutlineMinus /> : <AiOutlinePlus />}
+                </span>
+              </div>
+              {showTextBox && (
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+              )}
+            </div>
+
+            <div className="card">
               <span>
-                {showTextBox ? <AiOutlineMinus /> : <AiOutlinePlus />}
+                You are only ₦156,142.00 away from Free Domestic Shipping!
+                (Excludes International)
               </span>
             </div>
-            {showTextBox && (
-              <textarea name="" id="" cols="30" rows="10"></textarea>
-            )}
-          </div>
 
-          <div className="card">
-            <span>
-              You are only ₦156,142.00 away from Free Domestic Shipping!
-              (Excludes International)
-            </span>
-          </div>
+            <div className="total">
+              <div className="sub__total">
+                <p>subtotal</p>
+                <p>
+                  {cartTotalPrice
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
+              </div>
+              <div className="shipping">
+                <p>shipping</p>
+                <p>Calculated at checkout</p>
+              </div>
+              <br />
+              <hr />
+              <div className="total_pay">
+                <p>Total</p>
+                <p>
+                  {cartTotalPrice
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
+              </div>
+            </div>
 
-          <div className="total">
-            <div className="sub__total">
-              <p>subtotal</p>
-              <p>
-                {cartTotalPrice
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </p>
+            <div className="cart__checkout">
+              <button>View Cart</button>
+              <button>Checkout</button>
             </div>
-            <div className="shipping">
-              <p>shipping</p>
-              <p>Calculated at checkout</p>
-            </div>
-            <br />
-            <hr />
-            <div className="total_pay">
-              <p>Total</p>
-              <p>
-                {cartTotalPrice
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </p>
-            </div>
-          </div>
-
-          <div className="cart__checkout">
-            <button>View Cart</button>
-            <button>Checkout</button>
-          </div>
-        </>
-      )}
-    </Container>
+          </>
+        )}
+      </Container>
   );
 }
 
 export default Cart;
+
 
 const Container = styled(motion.div)`
   @media (max-width: 768px) {

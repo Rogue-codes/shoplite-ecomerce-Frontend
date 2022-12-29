@@ -48,6 +48,10 @@ export const productApi = createApi({
       query: (category) => `/product/all?category=${category}&limit=4`,
     }),
 
+    getsearch: builder.query({
+      query: (key) => `/product/${key}`,
+    }),
+
     // mutations (login/register)
     register: builder.mutation({
       query: (user) => ({
@@ -91,5 +95,6 @@ export const {
   useLoginMutation,
   useGetUserQuery,
   useUpdateUserMutation,
-  useGetRelatedProductsQuery
+  useGetRelatedProductsQuery,
+  useGetsearchQuery
 } = productApi;

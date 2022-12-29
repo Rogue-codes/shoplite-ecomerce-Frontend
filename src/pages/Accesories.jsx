@@ -35,8 +35,9 @@ function Accesories() {
     query,
     sortBy,
     priceVal,
-    mobilePriceVal
+    mobilePriceVal,
   });
+  
   return (
     <Container>
       <MobileFilter
